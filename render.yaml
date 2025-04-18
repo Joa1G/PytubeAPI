@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: pytube-api
+    name: yt-dlp-api
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: ./start.sh
