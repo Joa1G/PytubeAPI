@@ -1,14 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel
 import yt_dlp
 
 app = FastAPI()
 
-class VideoRequest(BaseModel):
-    url: str
-
-@app.post("/audio_info")
-async def get_audio_info(data: VideoRequest):
+@app.get("/audio_info/{url:path}")
+async def get_audio_info(url: str):
     try:
         ydl_opts = {
             'quiet': True,
@@ -18,9 +15,8 @@ async def get_audio_info(data: VideoRequest):
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(data.url, download=False)
+            info = ydl.extract_info(url, download=False)
 
-        # Modificando para incluir os links de download diretamente
         audio_formats = [
             {
                 "format_id": f["format_id"],
@@ -28,7 +24,7 @@ async def get_audio_info(data: VideoRequest):
                 "abr": f.get("abr", "unknown"),
                 "filesize": f.get("filesize", None),
                 "format_note": f.get("format_note", ""),
-                "url": f.get("url", "")  # Incluindo a URL de download diretamente aqui
+                "url": f.get("url", "")
             }
             for f in info['formats'] if f.get("vcodec") == "none"
         ]
