@@ -1,0 +1,20 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "config": {
+      "phases": {
+        "build": {
+          "commands": [
+            "pip install -r requirements.txt"
+          ]
+        },
+        "start": {
+          "command": "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
+        }
+      }
+    }
+  },
+  "deploy": {
+    "startCommand": "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
+  }
+}
