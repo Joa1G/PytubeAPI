@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException, Path
-from pydantic import BaseModel
 import yt_dlp
 
 app = FastAPI()
