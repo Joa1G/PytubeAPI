@@ -8,6 +8,7 @@ app = FastAPI()
 async def get_audio_info(url: str):
     try:
         ydl_opts = {
+            'cookies': './youtube_cookies.txt',
             'quiet': True,
             'skip_download': True,
             'forcejson': True,
