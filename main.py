@@ -79,7 +79,7 @@ async def get_video_with_audio_info(url: str):
 
         video_audio_formats = []
         for f in info['formats']:
-            if f.get("vcodec") != "none" and f.get("height") <= 1080 and f.get("format_note", "") != "":
+            if f.get("vcodec") != "none" and f.get("acodec") != "none":
                 filesize = f.get("filesize") or f.get("filesize_approx")
 
                 video_audio_formats.append({
